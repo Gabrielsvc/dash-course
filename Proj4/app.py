@@ -18,7 +18,9 @@ app.layout = html.Div([
     html.Div(id='my-output'),
 ])
 
-
+@app.callback(
+    [], [], []
+)
 def update_output_div(value):
     return "Saída: {}".format(value)
 
