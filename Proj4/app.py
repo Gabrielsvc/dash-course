@@ -3,7 +3,7 @@ import dash
 from dash import html, dcc
 import plotly.express as px
 import pandas as pd
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -17,9 +17,12 @@ app.layout = html.Div([
     html.Br(),
     html.Div(id='my-output'),
 ])
-
+# Primeiro: lista com todos ids do nosso output
+# Segundo: listar inputs
+# Terceiro: state, valor a ser usado para outro cálculo, mas sem chamar função
 @app.callback(
-    [], [], []
+    Output(component_id="my-output", component_property="children"),
+    [Input(component_id="my-input", component_property="value")]
 )
 def update_output_div(value):
     return "Saída: {}".format(value)

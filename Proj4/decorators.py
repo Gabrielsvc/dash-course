@@ -10,10 +10,10 @@ print(f1, a)
 
 # Definindo funções dentro de outras
 def soma_dois(numero):
-    def divide_dois(numero):
-        return numero/2
-    return numero+2
-soma_dois(4)
+    def soma_um(numero):
+        return numero + 1
+    return soma_um(numero+1)
+print(soma_dois(4))
 
 # Funções como argumentos
 def soma_um(numero):
@@ -48,3 +48,18 @@ decorador_maiusculo(diga_oi)
 def diga_oi():
     return 'ola ola'
 diga_oi
+
+
+# Ou, como no tutorial
+def dec_mais(function):
+    def wrapper():
+        func=function()
+        cria_maiusculo=func.upper()
+        return cria_maiusculo
+    return wrapper
+
+@dec_mais
+def diga_oi():
+    return 'oi oi oi'
+
+print(diga_oi())
