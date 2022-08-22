@@ -31,6 +31,8 @@ def get_obs_data():
 
     df_obs = pd.concat(
         [df.assign(tower=tower) for df, tower in zip(df_list, tower_names)])
+    df_obs['data']=pd.to_datetime(df_obs['Date/Time'])
+    df_obs = df_obs.drop(df_obs.columns.difference(['V1 [m/s]','data','tower']), 1)
     return df_obs
 
 
@@ -61,6 +63,7 @@ def get_sim_data(month):
 
     df_sims = pd.concat(
         [df.assign(tower=tower) for df, tower in zip(df_list, tower_names)])
+    df_sims['data'] = pd.to_datetime(df_sims['data'])
     return df_sims
 
 
@@ -70,10 +73,14 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 df_sims = get_sim_data('01')
+df_obs = get_obs_data()
+dados=pd.merge(df_sims, df_obs, on=['data','tower'])
+
 fig = make_subplots(rows=2, cols=2, subplot_titles=('ms-01', 'ms-02', 'ms-03',
 'ms-05'))
 
-fig.append_trace(go.Scatter(x=df_sims['data'].loc[df_sims['tower']== 'ms01'], y=df_sims['value'], mode='lines+markers'), row=1, col=1)
+fig.append_trace(go.Scatter(x=dados['data'].loc[dados['tower']== 'ms01'],
+y=[dados['value'],dados['V1 [m/s]']], mode='lines+markers'), row=1, col=1)
 fig.append_trace(go.Scatter(x=df_sims['data'].loc[df_sims['tower']== 'ms02'],
 y=df_sims['value'].loc[df_sims['tower']=='ms02'], mode='lines+markers'), row=2, col=1)
 fig.append_trace(go.Scatter(x=df_sims['data'].loc[df_sims['tower']== 'ms03'],
