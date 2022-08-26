@@ -34,6 +34,7 @@ app.layout = html.Div([
 def set_cities_options(selected_country):
     return [{'label': i, 'value': i} for i in all_options[selected_country]]
 
+
 @app.callback(
     Output('cidades', 'value'),
     Input('cidades', 'options'))
