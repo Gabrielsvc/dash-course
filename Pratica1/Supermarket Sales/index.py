@@ -9,7 +9,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-df_data = pd.read_csv("supermarket_sales.csv")
+df_data = pd.read_csv("/home/gsvc/Repos/dash-course/Pratica1/Supermarket Sales/supermarket_sales.csv")
 df_data["Date"] = pd.to_datetime(df_data["Date"])
 
 
