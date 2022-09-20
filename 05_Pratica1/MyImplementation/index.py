@@ -38,7 +38,7 @@ app.layout = html.Div(children=[
     Output('pay_fig', 'figure'),
     Output('income_per_product_fig', 'figure'),
     ],[
-    Input('drop_city', 'value'),
+    Input('check_city', 'value'),
     Input('main_variable', 'value')
     ]
 )
@@ -55,19 +55,19 @@ def render_graphs(cities, main_variable):
                   apply(operation).
                   to_frame().
                   reset_index())
-    df_prod_inc = (df_filtered.groupby('Product Line', 'City')[main_variable].
+    df_prod_inc = (df_filtered.groupby(['Product line', 'City'])[main_variable].
                   apply(operation).
                   to_frame().
                   reset_index())
 
     fig_city = px.bar(df_city, x="City", y=main_variable)
-    fig_payment = px.bar(df_payment, x='Payment', y=main_variable, orientation='h')
+    fig_payment = px.bar(df_payment, x=main_variable, y='Payment', orientation='h')
     fig_prod_inc = px.bar(df_prod_inc, x=main_variable,
                           y='Product line', color='City', orientation='h')
 
-    fig_city.layout(margin=dict(l=0, r=0, t=20, b=20), height=200)
-    fig_payment.layout(margin=dict(l=0, r=0, t=20, b=20), height=200)
-    fig_prod_inc.layout(margin=dict(l=0, r=0, t=20, b=20), height=600)
+    fig_city.update_layout(margin=dict(l=0, r=0, t=20, b=20), height=200)
+    fig_payment.update_layout(margin=dict(l=0, r=0, t=20, b=20), height=200)
+    fig_prod_inc.update_layout(margin=dict(l=0, r=0, t=20, b=20), height=600)
 
 
     return fig_city, fig_payment, fig_prod_inc
