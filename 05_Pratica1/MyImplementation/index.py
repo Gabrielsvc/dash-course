@@ -63,7 +63,8 @@ def render_graphs(cities, main_variable):
     fig_city = px.bar(df_city, x="City", y=main_variable)
     fig_payment = px.bar(df_payment, x=main_variable, y='Payment', orientation='h')
     fig_prod_inc = px.bar(df_prod_inc, x=main_variable,
-                          y='Product line', color='City', orientation='h')
+                          y='Product line', color='City', orientation='h',
+                          barmode='group')
 
     fig_city.update_layout(margin=dict(l=0, r=0, t=20, b=20), height=200)
     fig_payment.update_layout(margin=dict(l=0, r=0, t=20, b=20), height=200)
